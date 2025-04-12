@@ -1,5 +1,7 @@
 #!/bin/sh
 
+export PYTHONPATH=/app
+
 sleep 5
 
 # Run migrations
