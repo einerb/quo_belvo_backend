@@ -3,6 +3,7 @@ from pydantic import PostgresDsn, field_validator
 from typing import List
 import warnings
 from dotenv import load_dotenv
+import os
 
 load_dotenv()
 
@@ -29,7 +30,7 @@ class Settings(BaseSettings):
         return v
     
     class Config:
-        env_file = ".env"
+        env_file = ".env" if os.getenv("ENV", "development") == "development" else None
         env_file_encoding = "utf-8"
         case_sensitive = True
 
