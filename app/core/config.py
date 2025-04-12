@@ -20,7 +20,7 @@ class Settings(BaseSettings):
     
     ALLOWED_ORIGINS: List[str] = (
         ["*"] if ENV == "development" 
-        else ["https://tudominio.com"]
+        else ["https://quo-belvo-frontend.vercel.app"]
     )
 
     @field_validator('DATABASE_URL')
