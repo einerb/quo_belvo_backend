@@ -1,7 +1,9 @@
+#!/bin/sh
+
 sleep 5
 
-# Rin migrations
+# Run migrations
 alembic upgrade head
 
-# Run Server
+# Run server
 exec uvicorn app.main:app --host 0.0.0.0 --port 8080
