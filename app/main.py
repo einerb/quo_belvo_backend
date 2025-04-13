@@ -1,13 +1,19 @@
 from fastapi import FastAPI, Request
+from starlette.middleware import Middleware
+from fastapi.middleware.trustedhost import TrustedHostMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
-from fastapi.middleware.cors import CORSMiddleware
 
 from app.utils.exceptions import CustomHTTPException
 from app.api.v1.api import router as api_router
 from app.core.config import settings
+
+middleware_stack = [
+    Middleware(TrustedHostMiddleware, allowed_hosts=["quo-belvo-backend.fly.dev", "*.fly.dev"])
+]
 
 limiter = Limiter(key_func=get_remote_address)
 
@@ -15,22 +21,23 @@ app = FastAPI(
     title="Quo API",
     debug=settings.DEBUG,
     docs_url=None if settings.ENV == "production" else "/docs",
-    redoc_url=None
+    redoc_url=None,
+    middleware=middleware_stack
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://quo-belvo-frontend.vercel.app",
+        "https://*.quo-belvo-frontend.vercel.app"
+    ] if settings.ENV == "production" else ["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
 )
 
 app.state.limiter = limiter
-
 app.add_middleware(SlowAPIMiddleware)
-
-""" app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-    expose_headers=["*"],
-    max_age=600
-) """
 
 @app.exception_handler(RateLimitExceeded)
 async def rate_limit_exceeded_handler(request: Request, exc: RateLimitExceeded):
