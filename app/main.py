@@ -22,7 +22,7 @@ app.state.limiter = limiter
 
 app.add_middleware(SlowAPIMiddleware)
 
-app.add_middleware(
+""" app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=True,
@@ -30,7 +30,7 @@ app.add_middleware(
     allow_headers=["*"],
     expose_headers=["*"],
     max_age=600
-)
+) """
 
 @app.exception_handler(RateLimitExceeded)
 async def rate_limit_exceeded_handler(request: Request, exc: RateLimitExceeded):
