@@ -22,10 +22,10 @@ app.state.limiter = limiter
 
 app.add_middleware(SlowAPIMiddleware)
 
-origins_regex = r"^https://(.*\.)?quo-belvo-frontend\.vercel\.app$"
+PRODUCTION_ORIGIN_REGEX = r"^https://(\w+\.)?quo-belvo-frontend\.vercel\.app$"
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins_regex,
+    allow_origins=PRODUCTION_ORIGIN_REGEX,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
