@@ -17,16 +17,6 @@ class Settings(BaseSettings):
     
     ENV: str = "development"
     DEBUG: bool = True if ENV != "production" else False
-    
-    ALLOWED_ORIGINS: List[str] = (
-        ["*"] if ENV == "development" 
-        else [
-            "https://quo-belvo-frontend.vercel.app",
-            "https://quo-belvo-frontend.vercel.app/",
-            "https://www.quo-belvo-frontend.vercel.app",
-            "https://www.quo-belvo-frontend.vercel.app/"
-        ]
-    )
 
     @field_validator('DATABASE_URL')
     def validate_db_url(cls, v):
@@ -40,12 +30,6 @@ class Settings(BaseSettings):
         case_sensitive = True
 
 settings = Settings(_env_file='.env')
-
-if settings.ENV == "production":
-    if settings.DEBUG:
-        warnings.warn("¡DEBUG está activado en producción!", RuntimeWarning)
-    if "*" in settings.ALLOWED_ORIGINS:
-        warnings.warn("¡CORS abierto en producción!", RuntimeWarning)
 
 if not settings.DATABASE_URL:
     raise ValueError("DATABASE_URL es requerido")
