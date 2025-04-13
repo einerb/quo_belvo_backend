@@ -22,7 +22,8 @@ app = FastAPI(
     debug=settings.DEBUG,
     docs_url=None if settings.ENV == "production" else "/docs",
     redoc_url=None,
-    middleware=middleware_stack
+    middleware=middleware_stack,
+    trust_forwarded=True
 )
 
 app.add_middleware(
