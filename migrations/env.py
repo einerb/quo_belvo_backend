@@ -1,9 +1,13 @@
-from logging.config import fileConfig
 import os
+import sys
+from logging.config import fileConfig
 from sqlalchemy import create_engine
 from sqlalchemy import pool
 from alembic import context
 from dotenv import load_dotenv
+
+sys.path.insert(0, '/app')
+sys.path.insert(0, '/app/app')
 
 from app.db.base import Base
 import app.models

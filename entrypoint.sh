@@ -1,11 +1,13 @@
 #!/bin/sh
 
-export PYTHONPATH=/app:/app/app
+export PYTHONPATH="/app:/usr/local/lib/python3.13/site-packages"
 
-sleep 5
+echo "Python path: $PYTHONPATH" >&2
+echo "Contenido de /app:" >&2
+ls -la /app >&2
 
 # Run migrations
-alembic upgrade head
+cd /app && alembic upgrade head
 
 # Run server
 exec uvicorn app.main:app --host 0.0.0.0 --port 8080
