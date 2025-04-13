@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export PYTHONPATH=/app
+export PYTHONPATH=/app:/app/app
 
 sleep 5
 
