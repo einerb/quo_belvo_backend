@@ -22,7 +22,9 @@ class Settings(BaseSettings):
         ["*"] if ENV == "development" 
         else [
             "https://quo-belvo-frontend.vercel.app",
-            "https://www.quo-belvo-frontend.vercel.app"
+            "https://quo-belvo-frontend.vercel.app/",
+            "https://www.quo-belvo-frontend.vercel.app",
+            "https://www.quo-belvo-frontend.vercel.app/"
         ]
     )
 
