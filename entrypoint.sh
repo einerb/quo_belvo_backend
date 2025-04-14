@@ -7,4 +7,4 @@ echo "Contenido de /app:" >&2
 ls -la /app >&2
 
 # Run server
-exec uvicorn app.main:app --host 0.0.0.0 --port 8080
+exec uvicorn app.main:app --host 0.0.0.0 --port 8080 --proxy-headers
